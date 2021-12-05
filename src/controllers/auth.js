@@ -2,10 +2,13 @@ const waterfall = require('async/waterfall')
 const path = require('path')
 const fs = require('fs')
 
+const verifyEmailPage = fs.readFileSync(path.join(__dirname, '../views/verifyEmail.html'), 'utf8')
+
 const User = require('../models/User')
 const { hash } = require('../helpers/sha512')
 const jwt = require('../helpers/jwt')
 const Session = require('../models/Session')
+const { sendEmail } = require('../helpers/email')
 
 module.exports.register = (req, res) => {
     waterfall([
@@ -15,15 +18,41 @@ module.exports.register = (req, res) => {
             }
             next(null)
           },
+          function signJWT(next) {
+            const data = { ...req.body }
+            delete data.password
+      
+            jwt.sign(data, (error, token) => {
+              if (error) {
+                next(error)
+              } else {
+                req.body.token = token
+                next(null)
+              }
+            })
+          },
         function insertUser(next) {
-            User.create({ ...req.body, isAdmin: 0, token : "", sudahAktif: 1})
+            User.create({ ...req.body, isAdmin: 0, sudahAktif: 0})
                 .then((_res) => {
                     next(null, _res)
                 })
                 .catch((error) => {
+                  console.log(error.message)
                     next(error)
                 })
         },
+        function sendVerificationEmail(insertedData, next) {
+          const link = process.env.FE_URL + '/auth/verify?token=' + req.body.token
+          const text = "Please visit this link to verify your email address : " + link
+          const html = verifyEmailPage.replace('##link##', link)
+          sendEmail(req.body.email, 'Email Verification', text, html)
+            .then((_res) => {
+              next(null, insertedData)
+            })
+            .catch((error) => {
+              next(error)
+            })
+        }
 
     ],
         function (error, result) {
