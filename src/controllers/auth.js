@@ -123,4 +123,13 @@ module.exports.login = (req, res) => {
       }
     })
   }
+  module.exports.logout = (req, res) => {
+    req.currentSession.destroy()
+      .then((_res) => {
+        res.send('OK')
+      })
+      .catch((error) => {
+        res.status(500).send(error)
+      })
+  }
   
