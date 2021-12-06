@@ -42,7 +42,7 @@ module.exports.register = (req, res) => {
                 })
         },
         function sendVerificationEmail(insertedData, next) {
-          const link = process.env.FE_URL + '/auth/verify?token=' + req.body.token
+          const link = process.env.FE_URL + '/verify?token=' + req.body.token
           const text = "Please visit this link to verify your email address : " + link
           const html = verifyEmailPage.replace('##link##', link)
           sendEmail(req.body.email, 'Email Verification', text, html)
@@ -100,3 +100,27 @@ module.exports.login = (req, res) => {
         }
       })
   }
+
+  module.exports.checkToken = (req, res) => {
+    jwt.verify(req.query.token, (err, data) => {
+      if (err) {
+        res.status(500).send(err.message)
+      } else {
+        User.findOne({ where: { token: req.query.token } })
+          .then((currentUser) => {
+            if (currentUser) {
+              return currentUser.update({ token: null, sudahAktif: true })
+            } else {
+              res.status(400).send('Invalid Token')
+            }
+          })
+          .then((_res) => {
+            res.send('OK')
+          })
+          .catch((error) => {
+            res.status(500).send(error)
+          })
+      }
+    })
+  }
+  
