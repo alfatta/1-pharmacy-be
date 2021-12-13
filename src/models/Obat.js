@@ -46,6 +46,11 @@ const Obat = db.define('obat', {
       allowNull: false
       
     },
+
+    gambarObat: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
   }, {
     freezeTableName: true,
     timestamps:false
