@@ -10,9 +10,26 @@ const Kategori = require('../models/Kategori')
 module.exports.getAllProduct = (req, res) => {
     waterfall([
         function getAllData(next){
-            Obat.findAll({include : [{model : Kategori}]})
+            const page = parseInt(req.query.page) || 1
+            const perPage = parseInt(req.query.perPage) || 20
+            const offset = (page - 1)*perPage
+            const limit = perPage
+            Obat.findAndCountAll({
+                include: [{
+                    model: Kategori
+                }],
+                offset,
+                limit,
+            })
             .then((_res) => {
-                next(null, _res)
+                const totalPage = Math.ceil(_res.count/perPage)
+                const data = {
+                    ..._res,
+                    totalPage,
+                    nextPage : page<totalPage ? page+1 : null,
+                    previousPage: page > 1 ? page-1 : null,
+                }
+                next(null, data)
             })
             .catch((error) => {
               console.log(error.message)
