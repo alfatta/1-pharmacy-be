@@ -16,6 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `kategori`
+--
+
+DROP TABLE IF EXISTS `kategori`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `kategori` (
+  `idKategori` int NOT NULL AUTO_INCREMENT,
+  `namaKategori` varchar(200) NOT NULL,
+  PRIMARY KEY (`idKategori`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `kategori`
+--
+
+LOCK TABLES `kategori` WRITE;
+/*!40000 ALTER TABLE `kategori` DISABLE KEYS */;
+INSERT INTO `kategori` VALUES (1,'Obat bebas'),(2,'Obat keras'),(3,'Obat bebas terbatas');
+/*!40000 ALTER TABLE `kategori` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `obat`
 --
 
@@ -28,8 +52,10 @@ CREATE TABLE `obat` (
   `infoObat` text NOT NULL,
   `hargaObat` int NOT NULL,
   `idObat` int NOT NULL AUTO_INCREMENT,
+  `idKategori` int NOT NULL,
+  `gambarObat` text,
   PRIMARY KEY (`idObat`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +64,7 @@ CREATE TABLE `obat` (
 
 LOCK TABLES `obat` WRITE;
 /*!40000 ALTER TABLE `obat` DISABLE KEYS */;
+INSERT INTO `obat` VALUES ('Panadol',5,'Obat penurun panas',5000,1,3,NULL),('Aspirin',2,'Obat aspirin, pereda demam',2500,2,1,NULL),('Esperson',3,'Obat kulit',60000,3,2,NULL),('Antangin',1,'Obat masuk angin',5000,4,1,NULL),('Tolak Angin',1,'Obat masuk angin',5000,5,1,NULL),('Redoxon',2,'Obat demam',25000,6,3,NULL),('Teriteri',1,'Obat demam',50000,7,2,NULL),('Asdfk',1,'Obat batuk',250000,8,2,NULL);
 /*!40000 ALTER TABLE `obat` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -53,7 +80,7 @@ CREATE TABLE `session` (
   `tokenSession` varchar(200) NOT NULL,
   `idUser` int NOT NULL,
   PRIMARY KEY (`idSession`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +89,7 @@ CREATE TABLE `session` (
 
 LOCK TABLES `session` WRITE;
 /*!40000 ALTER TABLE `session` DISABLE KEYS */;
-INSERT INTO `session` VALUES (1,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtcGF0bGltYUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjM4MzY2NjUxLCJleHAiOjE2Mzg0NTMwNTF9.DY78qoTbpxcENyI-R3rMqARw_5Djgj4HwmiOs2ujCg8',4),(2,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzODY3NTExOCwiZXhwIjoxNjM4NzYxNTE4fQ.8B1jW2FTQMoTxpWPNEkH_fbHod9OuuFssBJtdfr1nzs',6),(3,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtcGF0bGltYUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjM4Njg3NTE5LCJleHAiOjE2Mzg3NzM5MTl9.U_EXMvrECdf21tPUH4BzCLR5JkegIWlKVK0KkFo08so',4),(4,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzODY4ODM3MSwiZXhwIjoxNjM4Nzc0NzcxfQ.Oc8DJhEHVdY3-7v4ejNjWkvRw4c48Wf4dZ82m3shswU',6),(5,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzODY4ODU2NCwiZXhwIjoxNjM4Nzc0OTY0fQ.ImfXXAf7rMLcfzpeSuFt0flW9uWVuultYtXYvZ8DBxA',6),(6,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzODY4ODc2NywiZXhwIjoxNjM4Nzc1MTY3fQ.oC0w_byNBAK6E5LZcOrbzpyFaCt4_g5es5wbgvvAG6U',6),(7,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzODY4ODkwMSwiZXhwIjoxNjM4Nzc1MzAxfQ.DQEsxqdK5WFAgPGRBciwCwFBC2YcmVcoF4i_alEbxEA',6),(8,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzODY4OTA5NSwiZXhwIjoxNjM4Nzc1NDk1fQ.Q0wRLvz-aXyxmPfxPUql__4zPMdi3JGnyOKtM-by1jY',6),(9,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBwYXBAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzODc5NzExOSwiZXhwIjoxNjM4ODgzNTE5fQ.Kocsif4OZaB3pLcPErsirh1q2fQxFyeopezEpLZkDEk',18),(10,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBwYXBAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzODc5OTYwNiwiZXhwIjoxNjM4ODg2MDA2fQ.pXTLKbN9JUwUMwNYl4N12bGWysg0YjdTcaMZr94ZUV4',18);
+INSERT INTO `session` VALUES (1,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtcGF0bGltYUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjM4MzY2NjUxLCJleHAiOjE2Mzg0NTMwNTF9.DY78qoTbpxcENyI-R3rMqARw_5Djgj4HwmiOs2ujCg8',4),(2,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzODY3NTExOCwiZXhwIjoxNjM4NzYxNTE4fQ.8B1jW2FTQMoTxpWPNEkH_fbHod9OuuFssBJtdfr1nzs',6),(3,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtcGF0bGltYUBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjM4Njg3NTE5LCJleHAiOjE2Mzg3NzM5MTl9.U_EXMvrECdf21tPUH4BzCLR5JkegIWlKVK0KkFo08so',4),(4,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzODY4ODM3MSwiZXhwIjoxNjM4Nzc0NzcxfQ.Oc8DJhEHVdY3-7v4ejNjWkvRw4c48Wf4dZ82m3shswU',6),(5,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzODY4ODU2NCwiZXhwIjoxNjM4Nzc0OTY0fQ.ImfXXAf7rMLcfzpeSuFt0flW9uWVuultYtXYvZ8DBxA',6),(6,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzODY4ODc2NywiZXhwIjoxNjM4Nzc1MTY3fQ.oC0w_byNBAK6E5LZcOrbzpyFaCt4_g5es5wbgvvAG6U',6),(7,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzODY4ODkwMSwiZXhwIjoxNjM4Nzc1MzAxfQ.DQEsxqdK5WFAgPGRBciwCwFBC2YcmVcoF4i_alEbxEA',6),(8,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzODY4OTA5NSwiZXhwIjoxNjM4Nzc1NDk1fQ.Q0wRLvz-aXyxmPfxPUql__4zPMdi3JGnyOKtM-by1jY',6),(9,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBwYXBAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzODc5NzExOSwiZXhwIjoxNjM4ODgzNTE5fQ.Kocsif4OZaB3pLcPErsirh1q2fQxFyeopezEpLZkDEk',18),(10,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBwYXBAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzODc5OTYwNiwiZXhwIjoxNjM4ODg2MDA2fQ.pXTLKbN9JUwUMwNYl4N12bGWysg0YjdTcaMZr94ZUV4',18),(18,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBwYXBAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzOTI4MDM5NCwiZXhwIjoxNjM5MzY2Nzk0fQ.ssPT7SvuXB--OhyXFFPIln0cj4BJ6aL0a-uh7BxoIz8',18);
 /*!40000 ALTER TABLE `session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,4 +191,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-06 21:15:07
+-- Dump completed on 2021-12-13 20:31:30
