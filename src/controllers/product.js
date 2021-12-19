@@ -50,7 +50,11 @@ module.exports.getAllProduct = (req, res) => {
 module.exports.getProduct = (req, res) => {
     waterfall([
         function getData(next){
-            Obat.findByPk(req.params.id)
+            Obat.findByPk(req.params.id, {
+                include: [{
+                    model: Kategori
+                }],
+            })
             .then((_res) => {
                 next(null, _res)
             })
