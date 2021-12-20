@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize')
 const db = require('../helpers/db')
+const TransaksiDetail = require('./TransaksiDetail')
 const User = require('./User')
 
 const Transaksi = db.define('transaksi', {
@@ -41,5 +42,6 @@ const Transaksi = db.define('transaksi', {
     freezeTableName: true,
     timestamps:false
   }) 
-  Transaksi.belongsTo(User,{foreignKey:'idUser'}) 
+  Transaksi.belongsTo(User,{foreignKey:'idUser'})
+  Transaksi.hasMany(TransaksiDetail,{foreignKey : 'idTransaksi'})
   module.exports = Transaksi

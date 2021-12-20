@@ -3,6 +3,7 @@ const waterfall = require('async/waterfall')
 const Transaksi = require('../models/Transaksi')
 const TransaksiDetail = require('../models/TransaksiDetail')
 const moment = require('moment')
+const User = require('../models/User')
 
 module.exports.createTransaction = (req, res) => {
     waterfall([
@@ -52,4 +53,51 @@ module.exports.createTransaction = (req, res) => {
         }
     }
     )
+}
+
+module.exports.getTransaction = (req, res) => {
+    waterfall([
+        function getTransactionData(next){
+            const page = parseInt(req.query.page) || 1
+            const perPage = parseInt(req.query.perPage) || 20
+            const offset = (page - 1)*perPage
+            const limit = perPage
+            Transaksi.findAndCountAll({
+                include: [
+                    {
+                        model: TransaksiDetail
+                    },
+                    {
+                        model : User
+                    }
+                ],
+                offset,
+                limit,
+            })
+            .then((_res) => {
+                const totalPage = Math.ceil(_res.count/perPage)
+                const data = {
+                    ..._res,
+                    totalPage,
+                    nextPage : page<totalPage ? page+1 : null,
+                    previousPage: page > 1 ? page-1 : null,
+                }
+                next(null, data)
+            })
+            .catch((error) => {
+              console.log(error.message)
+                next(error)
+            })
+        }
+    ],
+    function (error, result) {
+        if (error) {
+            res.status(500).send(error)
+        } else {
+            res.send(result)
+        }
+    }
+    )
+    
+    
 }

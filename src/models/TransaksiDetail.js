@@ -31,5 +31,4 @@ const TransaksiDetail = db.define('transaksidetail', {
     timestamps:false
   }) 
   TransaksiDetail.belongsTo(Obat,{foreignKey:'idObat'}) 
-  TransaksiDetail.belongsTo(Transaksi,{foreignKey:'idTransaksi'}) 
   module.exports = TransaksiDetail

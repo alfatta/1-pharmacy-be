@@ -28,4 +28,5 @@ route.post('/product', productController.addProduct)
 route.patch('/product/:id', productController.updateProduct)
 route.delete('/product/:id', productController.deleteProduct)
 route.post('/transaction',authMiddleware.checkAuth,transactionController.createTransaction)
+route.get('/transaction', transactionController.getTransaction)
 module.exports = route
