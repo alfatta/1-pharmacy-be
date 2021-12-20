@@ -10,6 +10,8 @@ const authMiddleware = require('../middlewares/auth')
 
 const productController = require('../controllers/product')
 
+const transactionController = require('../controllers/transaction')
+
 
 route.post('/auth/register', authController.register)
 route.post('/auth/login', authController.login)
@@ -25,4 +27,5 @@ route.get('/product/:id',productController.getProduct)
 route.post('/product', productController.addProduct)
 route.patch('/product/:id', productController.updateProduct)
 route.delete('/product/:id', productController.deleteProduct)
+route.post('/transaction',authMiddleware.checkAuth,transactionController.createTransaction)
 module.exports = route
