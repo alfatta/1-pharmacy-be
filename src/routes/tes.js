@@ -12,6 +12,8 @@ const productController = require('../controllers/product')
 
 const transactionController = require('../controllers/transaction')
 
+const uploadController = require('../controllers/upload')
+
 
 route.post('/auth/register', authController.register)
 route.post('/auth/login', authController.login)
@@ -29,5 +31,8 @@ route.patch('/product/:id', productController.updateProduct)
 route.delete('/product/:id', productController.deleteProduct)
 route.post('/transaction',authMiddleware.checkAuth,transactionController.createTransaction)
 route.get('/transaction', transactionController.getTransaction)
+route.post('/upload', uploadController.single('image'), (req, res) => {
+    res.send(`${process.env.API_URL}/${req.file.path}`)
+})
 route.get('/transaction/user/', authMiddleware.checkAuth, transactionController.getTransactionByUser)
 module.exports = route
