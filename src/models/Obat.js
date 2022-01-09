@@ -53,7 +53,8 @@ const Obat = db.define('obat', {
     },
   }, {
     freezeTableName: true,
-    timestamps:false
+    timestamps:true,
+    paranoid:true
   }) 
   Obat.belongsTo(Kategori,{foreignKey:'idKategori'}) 
   module.exports = Obat
