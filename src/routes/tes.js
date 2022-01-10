@@ -34,5 +34,6 @@ route.get('/transaction', transactionController.getTransaction)
 route.post('/upload', uploadController.single('image'), (req, res) => {
     res.send(`${process.env.API_URL}/${req.file.path}`)
 })
+route.patch('/transaction/:id', transactionController.updateTransaction)
 route.get('/transaction/user/', authMiddleware.checkAuth, transactionController.getTransactionByUser)
 module.exports = route

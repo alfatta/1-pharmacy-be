@@ -149,3 +149,28 @@ module.exports.getTransactionByUser = (req, res) => {
     
     
 }
+
+module.exports.updateTransaction = (req, res) => {
+    waterfall([
+        function updateData(next){
+            Transaksi.findByPk(req.params.id)
+                .then((_res) => {
+                    return _res.update(req.body)
+                })
+                .then((_res) => {
+                    next(null, _res)
+                })
+                .catch((error) => {
+                  console.log(error.message)
+                    next(error)
+                })
+        }],
+    function (error, result) {
+        if (error) {
+            res.status(500).send(error)
+        } else {
+            res.send(result)
+        }
+    }
+    )
+}
